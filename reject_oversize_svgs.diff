@@ -1,0 +1,16 @@
+Description: SVG Image reading: Reject oversize svgs as corrupt
+ Add an upper limit for height and width at 0xffff, same as jpeg.
+Origin: upstream, https://code.qt.io/cgit/qt/qtsvg.git/commit/?id=e544d8e457d52b54
+Last-Update: 2022-01-09
+
+--- a/src/plugins/imageformats/svg/qsvgiohandler.cpp
++++ b/src/plugins/imageformats/svg/qsvgiohandler.cpp
+@@ -177,6 +177,8 @@ bool QSvgIOHandler::read(QImage *image)
+             }
+         }
+         if (!finalSize.isEmpty()) {
++            if (qMax(finalSize.width(), finalSize.height()) > 0xffff)
++                return false; // Assume corrupted file
+             image->fill(d->backColor.rgba());
+             QPainter p(image);
+             d->r.render(&p, bounds);
