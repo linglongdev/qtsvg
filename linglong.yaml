@@ -1,23 +1,22 @@
 package:
   id: qtsvg
   kind: lib
-  version: 5.11.3
+  version: 5.15.7
 
 base:
   id: org.deepin.base
   version: 23.0.0
 
 depends:
-- id: qtbase
-  version: 5.11.3.15
+  - id: qtbase
+    version: 5.15
 
 source:
   kind: git
   url: https://github.com/deepin-community/qtsvg-opensource-src.git
-  version: v20/5.11.3
   commit: d9830389aff05317189b79739fb7a6d5738d4e16
   patch:
-  - CVE-2021-45930.diff
-  - reject_oversize_svgs.diff
+    - CVE-2021-45930.diff
+    - reject_oversize_svgs.diff
 build:
   kind: qmake
